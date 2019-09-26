@@ -8,11 +8,11 @@ use \yii\helpers\Html;
 
 $this->title = 'url.lc';
 ?>
-<div class="site-index">
+<div class="site-index col-md-push-4 col-md-4 text-center">
     <?php $form = ActiveForm::begin() ?>
     <?= $form->field($model, 'link')->textInput() ?>
     <div class="col-md-12 form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-primary', 'name' => 'submitButton']) ?>
+        <?= Html::submitButton('Save', ['class' => 'btn btn-primary btn-lg', 'name' => 'submitButton']) ?>
     </div>
     <?php ActiveForm::end() ?>
 </div>
