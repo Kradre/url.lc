@@ -36,6 +36,13 @@ class LinkForm extends Model
         ];
     }
 
+    /**
+     *
+     * Create short url record in database, based by assigned id (short link is created by hash function).
+     *
+     * @param $authKey
+     * @return UrlContainer|bool
+     */
     public function createRecord($authKey)
     {
         $record = new UrlContainer();
