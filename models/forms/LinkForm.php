@@ -1,7 +1,8 @@
 <?php
 
-namespace app\models;
+namespace app\models\forms;
 
+use app\models\UrlContainer;
 use Yii;
 use yii\base\Model;
 
@@ -23,8 +24,6 @@ class LinkForm extends Model
             [['link'], 'url'],
         ];
     }
-
-
 
 
     /**
@@ -62,7 +61,7 @@ class LinkForm extends Model
 
     protected function refreshLinks()
     {
-        /** TODO: Removal on expired links */
+        /** TODO: Removal on expired links (Not required for challenge) */
     }
 
 }

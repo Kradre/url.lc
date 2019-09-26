@@ -2,11 +2,14 @@
 
 use \yii\widgets\ActiveForm;
 use \yii\helpers\Html;
+use \yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model \app\models\LinkForm */
+/* @var $searchModel app\models\search\UrlSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'url.lc';
+$this->title = 'Short links creator';
 ?>
 <div class="site-index col-md-push-4 col-md-4 text-center">
     <?php $form = ActiveForm::begin() ?>

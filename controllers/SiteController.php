@@ -2,15 +2,15 @@
 
 namespace app\controllers;
 
-use app\models\LinkForm;
+use app\models\forms\LinkForm;
+use app\models\search\UrlSearch;
 use app\models\UrlContainer;
 use Yii;
 use yii\filters\AccessControl;
-use yii\helpers\Inflector;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
+use app\models\forms\LoginForm;
 
 class SiteController extends Controller
 {
@@ -57,18 +57,25 @@ class SiteController extends Controller
      */
     public function beforeAction($action)
     {
-        $actions = $this->getAllControllerActions();
+        /** Anonymous user ID (TODO: Auth by this ID) */
 
-        if ($action->id == 'index') {
-            $this->enableCsrfValidation = false;
+        $session = Yii::$app->session;
+
+        if (!$session->has('auth_key')) {
+            $session->set('auth_key', hash('sha256', time()));
         }
 
         return parent::beforeAction($action);
     }
 
+    /**
+     * Action for redirect on short links
+     *
+     * @param $slug
+     * @return Response
+     */
     public function actionRedirect($slug)
     {
-
         /** @var UrlContainer $urlData */
         $urlData = UrlContainer::find()->where(['short_url' => $slug])->one();
         if (!empty($urlData)) {
@@ -86,10 +93,6 @@ class SiteController extends Controller
     {
         $session = Yii::$app->session;
 
-        if (!$session->has('auth_key')) {
-            $session->set('auth_key', hash('sha256', time()));
-        }
-
         $model = new LinkForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             /** @var UrlContainer $urlRecord */
@@ -105,8 +108,13 @@ class SiteController extends Controller
             }
         }
 
+        $searchModel = new UrlSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         return $this->render('index', [
-            'model' => $model
+            'model' => $model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -144,29 +152,5 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-
-    /**
-     * Function to check all actions of controller.
-     * Required for short links
-     * @return array
-     */
-    public function getAllControllerActions()
-    {
-        $controllers = \yii\helpers\FileHelper::findFiles(Yii::getAlias('@app/controllers'), ['recursive' => true]);
-        $actions = [];
-        foreach ($controllers as $controller) {
-            $contents = file_get_contents($controller);
-            $controllerId = Inflector::camel2id(substr(basename($controller), 0, -14));
-            preg_match_all('/public function action(\w+?)\(/', $contents, $result);
-            foreach ($result[1] as $action) {
-                $actionId = Inflector::camel2id($action);
-                $route = $controllerId . '/' . $actionId;
-                $actions[$route] = $route;
-            }
-        }
-        asort($actions);
-        $actions[] = 'gii';
-        return $actions;
-    }
 
 }
