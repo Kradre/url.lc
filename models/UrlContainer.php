@@ -35,7 +35,6 @@ class UrlContainer extends \yii\db\ActiveRecord
             [['created_at'], 'integer'],
             [['short_url'], 'string', 'max' => 7],
             [['full_url', 'cookie_key'], 'string', 'max' => 255],
-            [['cookie_key'], 'unique'],
             [['short_url'], 'unique'],
         ];
     }
@@ -58,7 +57,7 @@ class UrlContainer extends \yii\db\ActiveRecord
     {
         return [
             'timestamp' => [
-                TimestampBehavior::className(),
+                'class' => TimestampBehavior::className(),
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', false],
                     ActiveRecord::EVENT_BEFORE_UPDATE => false,

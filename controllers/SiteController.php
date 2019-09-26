@@ -49,10 +49,6 @@ class SiteController extends Controller
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
         ];
     }
 
@@ -63,20 +59,22 @@ class SiteController extends Controller
     {
         $actions = $this->getAllControllerActions();
 
-        if (!in_array($action->id,$actions)) {
-            /** @var UrlContainer $urlData */
-            $urlData = UrlContainer::find()->where(['short_url' => $action->id])->one();
-            if (empty($urlData)) {
-                throw new \yii\web\NotFoundHttpException();
-            }
-            return $this->redirect($urlData->full_url);
-        }
-
         if ($action->id == 'index') {
             $this->enableCsrfValidation = false;
         }
 
         return parent::beforeAction($action);
+    }
+
+    public function actionRedirect($slug)
+    {
+
+        /** @var UrlContainer $urlData */
+        $urlData = UrlContainer::find()->where(['short_url' => $slug])->one();
+        if (!empty($urlData)) {
+            return $this->redirect($urlData->full_url);
+        }
+        return $this->goHome();
     }
 
     /**
@@ -86,22 +84,19 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $cookies = Yii::$app->request->cookies;
+        $session = Yii::$app->session;
 
-        if (!$cookies->has('auth_key')) {
-            $cookies->add(new \yii\web\Cookie([
-                'name' => 'auth_key',
-                'value' => hash('sha256', time())
-            ]));
+        if (!$session->has('auth_key')) {
+            $session->set('auth_key', hash('sha256', time()));
         }
 
         $model = new LinkForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             /** @var UrlContainer $urlRecord */
-            $urlRecord = $model->createRecord($cookies->get('auth_key'));
+            $urlRecord = $model->createRecord($session->get('auth_key'));
             if ($urlRecord) {
                 Yii::$app->session->setFlash('success',
-                    'Your short url: ' . Yii::$app->params['urlShort'] . '/'  . $urlRecord->short_url
+                    'Your short url: ' . Yii::$app->params['urlShort'] . '/' . $urlRecord->short_url
                 );
             } else {
                 Yii::$app->session->setFlash('error',
@@ -110,7 +105,7 @@ class SiteController extends Controller
             }
         }
 
-        return $this->render('index',[
+        return $this->render('index', [
             'model' => $model
         ]);
     }

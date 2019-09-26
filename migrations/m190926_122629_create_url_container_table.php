@@ -16,7 +16,7 @@ class m190926_122629_create_url_container_table extends Migration
             'id' => $this->primaryKey(),
             'short_url' => $this->string(7)->unique(),
             'full_url' => $this->string()->notNull(),
-            'cookie_key' => $this->string()->notNull()->unique(),
+            'cookie_key' => $this->string()->notNull(),
             'created_at' => $this->integer()
         ]);
     }
