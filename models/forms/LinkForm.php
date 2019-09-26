@@ -47,7 +47,6 @@ class LinkForm extends Model
     {
         $record = new UrlContainer();
         $record->full_url = $this->link;
-        //$record->short_url = hash('sha256', time());
         $record->cookie_key = $authKey;
         if ($record->save()) {
             $record->short_url = substr(hash('sha256', $record->id), 0, 7);
