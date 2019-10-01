@@ -5,6 +5,8 @@ A web service, what simply creating short links for long ones.
 Created in few hours as test challenge.
 
 ## Installation
+
+
 Install composer required packages
 ```
 composer install
