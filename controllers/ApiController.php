@@ -50,6 +50,10 @@ class ApiController extends ControllerApi
 
         Yii::error(var_export($model->errors,true));
         Yii::$app->response->statusCode = 403;
-        return ['status' => 'fail', 'code' => 403,'errors' => $model->errors];
+        $answer = ['status' => 'fail', 'code' => 403,'errors' => $model->errors];
+        if (isset($urlRecord)) {
+            $answer['urlData'] = $model->attributes;
+        }
+        return $answer;
     }
 }

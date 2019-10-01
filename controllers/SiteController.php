@@ -102,11 +102,10 @@ class SiteController extends Controller
                 Yii::$app->session->setFlash('success',
                     'Your short url: ' . Html::a($address,$address)
                 );
-            } else {
-                Yii::$app->session->setFlash('error',
-                    'Something went wrong. The information was sent to administrator.'
-                );
             }
+            Yii::$app->session->setFlash('error',
+                'Something went wrong. The information was sent to administrator.'
+            );
         }
 
         return $this->render('index', [
