@@ -14,6 +14,8 @@ services:
       - ./:/app:delegated
     ports:
       - '8000:80'
+    command:
+        - composer install
   db:
       image: mysql:5.7
       networks:

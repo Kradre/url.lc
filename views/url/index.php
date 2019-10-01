@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'url',
                 'value' => function ($data) {
                     /** @var \app\models\UrlContainer $data */
-                    return Yii::$app->params['urlShort'] . "/" . $data->short_url;
+                    return $_SERVER['HTTP_HOST'] . "/" . $data->short_url;
                 },
             ],
             'full_url:url',

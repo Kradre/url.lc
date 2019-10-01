@@ -99,7 +99,7 @@ class SiteController extends Controller
             $urlRecord = $model->createRecord($session->get('auth_key'));
             if ($urlRecord) {
                 Yii::$app->session->setFlash('success',
-                    'Your short url: ' . Yii::$app->params['urlShort'] . '/' . $urlRecord->short_url
+                    'Your short url: ' . $_SERVER['HTTP_HOST'] . '/' . $urlRecord->short_url
                 );
             } else {
                 Yii::$app->session->setFlash('error',
