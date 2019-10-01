@@ -12,7 +12,7 @@ class m191001_090350_removing_artifacts extends Migration
      */
     public function safeUp()
     {
-
+        $this->dropColumn('url_container','cookie_key');
     }
 
     /**
@@ -20,23 +20,7 @@ class m191001_090350_removing_artifacts extends Migration
      */
     public function safeDown()
     {
-        echo "m191001_090350_removing_artifacts cannot be reverted.\n";
-
-        return false;
+        $this->addColumn('url_container','cookie_key',$this->string()->notNull());
     }
 
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m191001_090350_removing_artifacts cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

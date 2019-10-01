@@ -53,22 +53,6 @@ class SiteController extends Controller
     }
 
     /**
-     * @inheritdoc
-     */
-    public function beforeAction($action)
-    {
-        /** Anonymous user ID (TODO: Auth by this ID) */
-
-        $session = Yii::$app->session;
-
-        if (!$session->has('auth_key')) {
-            $session->set('auth_key', hash('sha256', time()));
-        }
-
-        return parent::beforeAction($action);
-    }
-
-    /**
      * Action for redirect on short links
      *
      * @param $slug
@@ -91,12 +75,11 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $session = Yii::$app->session;
 
         $model = new LinkForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             /** @var UrlContainer $urlRecord */
-            $urlRecord = $model->createRecord($session->get('auth_key'));
+            $urlRecord = $model->createRecord();
             if ($urlRecord) {
                 $address = $_SERVER['HTTP_HOST'] . '/' . $urlRecord->short_url;
                 Yii::$app->session->setFlash('success',

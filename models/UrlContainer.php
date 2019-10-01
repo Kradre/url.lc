@@ -31,10 +31,10 @@ class UrlContainer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['full_url', 'cookie_key'], 'required'],
+            [['full_url'], 'required'],
             [['created_at'], 'integer'],
             [['short_url'], 'string', 'max' => 7],
-            [['full_url', 'cookie_key'], 'string', 'max' => 500],
+            [['full_url'], 'string', 'max' => 500],
             [['short_url'], 'unique'],
         ];
     }
@@ -48,7 +48,6 @@ class UrlContainer extends \yii\db\ActiveRecord
             'id' => 'ID',
             'short_url' => 'Short Url',
             'full_url' => 'Full Url',
-            'cookie_key' => 'Cookie Key',
             'created_at' => 'Created At',
         ];
     }

@@ -39,15 +39,13 @@ class LinkForm extends Model
     /**
      *
      * Create short url record in database, based by assigned id (short link is created by hash function).
-     *
-     * @param $authKey
      * @return UrlContainer|bool
+     * @internal param $authKey
      */
-    public function createRecord($authKey)
+    public function createRecord()
     {
         $record = new UrlContainer();
         $record->full_url = $this->link;
-        $record->cookie_key = $authKey;
         try {
             if ($record->save()) {
                 $record->short_url = substr(hash('sha256', $record->id), 0, 7);
@@ -73,11 +71,6 @@ class LinkForm extends Model
                 ], true));
             return false;
         }
-    }
-
-    protected function refreshLinks()
-    {
-        /** TODO: Removal on expired links (Not required for challenge) */
     }
 
 }

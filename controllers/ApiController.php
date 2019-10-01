@@ -42,7 +42,7 @@ class ApiController extends ControllerApi
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $model = new LinkForm();
         if ($model->load(\Yii::$app->getRequest()->getBodyParams(), '') && $model->validate()) {
-            $urlRecord = $model->createRecord(hash('sha256', time()));
+            $urlRecord = $model->createRecord();
             if ($urlRecord) {
                 $address = $_SERVER['HTTP_HOST'] . '/' . $urlRecord->short_url;
                 return ['status' => 'success', 'code' => 200, 'url' => $address];
