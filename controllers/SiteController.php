@@ -3,10 +3,10 @@
 namespace app\controllers;
 
 use app\models\forms\LinkForm;
-use app\models\search\UrlSearch;
 use app\models\UrlContainer;
 use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
@@ -77,7 +77,7 @@ class SiteController extends Controller
     public function actionRedirect($slug)
     {
         /** @var UrlContainer $urlData */
-        $urlData = UrlContainer::find()->where(['short_url' => $slug])->one();
+        $urlData = UrlContainer::findOne(['short_url' => $slug]);
         if (!empty($urlData)) {
             return $this->redirect($urlData->full_url);
         }
@@ -98,8 +98,9 @@ class SiteController extends Controller
             /** @var UrlContainer $urlRecord */
             $urlRecord = $model->createRecord($session->get('auth_key'));
             if ($urlRecord) {
+                $address = $_SERVER['HTTP_HOST'] . '/' . $urlRecord->short_url;
                 Yii::$app->session->setFlash('success',
-                    'Your short url: ' . $_SERVER['HTTP_HOST'] . '/' . $urlRecord->short_url
+                    'Your short url: ' . Html::a($address,$address)
                 );
             } else {
                 Yii::$app->session->setFlash('error',
