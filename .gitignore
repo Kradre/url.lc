@@ -34,4 +34,5 @@ tests/_support/_generated
 
 # Ignoring the main configuration files (old idea - now it's configured for docker-compose
 #/config/db.php
+/database
 #/config/params.php
