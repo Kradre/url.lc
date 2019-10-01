@@ -25,7 +25,7 @@ class UrlController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create','update','view','delete','index'],
+                        'actions' => ['create', 'update', 'view', 'delete', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],

@@ -100,7 +100,7 @@ class SiteController extends Controller
             if ($urlRecord) {
                 $address = $_SERVER['HTTP_HOST'] . '/' . $urlRecord->short_url;
                 Yii::$app->session->setFlash('success',
-                    'Your short url: ' . Html::a($address,$address)
+                    'Your short url: ' . Html::a($address, $address)
                 );
             }
             Yii::$app->session->setFlash('error',

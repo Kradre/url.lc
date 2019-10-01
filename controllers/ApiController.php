@@ -37,7 +37,8 @@ class ApiController extends ControllerApi
      *
      * @return array
      */
-    public function actionAdd() {
+    public function actionAdd()
+    {
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $model = new LinkForm();
         if ($model->load(\Yii::$app->getRequest()->getBodyParams(), '') && $model->validate()) {
@@ -48,9 +49,9 @@ class ApiController extends ControllerApi
             }
         }
 
-        Yii::error(var_export($model->errors,true));
+        Yii::error(var_export($model->errors, true));
         Yii::$app->response->statusCode = 403;
-        $answer = ['status' => 'fail', 'code' => 403,'errors' => $model->attributes];
+        $answer = ['status' => 'fail', 'code' => 403, 'errors' => $model->attributes];
         return $answer;
     }
 }
