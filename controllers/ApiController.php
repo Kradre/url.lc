@@ -38,6 +38,7 @@ class ApiController extends ControllerApi
      * @return array
      */
     public function actionAdd() {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $model = new LinkForm();
         if ($model->load(\Yii::$app->getRequest()->getBodyParams(), '') && $model->validate()) {
             $urlRecord = $model->createRecord(hash('sha256', time()));
