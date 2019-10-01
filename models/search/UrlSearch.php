@@ -18,7 +18,7 @@ class UrlSearch extends UrlContainer
     {
         return [
             [['id', 'created_at'], 'integer'],
-            [['short_url', 'full_url', 'cookie_key'], 'safe'],
+            [['short_url', 'full_url'], 'safe'],
         ];
     }
 
@@ -63,8 +63,7 @@ class UrlSearch extends UrlContainer
         ]);
 
         $query->andFilterWhere(['like', 'short_url', $this->short_url])
-            ->andFilterWhere(['like', 'full_url', $this->full_url])
-            ->andFilterWhere(['like', 'cookie_key', $this->cookie_key]);
+            ->andFilterWhere(['like', 'full_url', $this->full_url]);
 
         return $dataProvider;
     }

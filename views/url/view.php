@@ -32,7 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'short_url:url',
             'full_url:url',
-            'cookie_key',
             'created_at',
         ],
     ]) ?>
