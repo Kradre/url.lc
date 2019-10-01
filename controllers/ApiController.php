@@ -27,6 +27,16 @@ class ApiController extends ControllerApi
         ];
     }
 
+    /**
+     *
+     * Action to create short URL
+     *
+     * POST, requires only 'link' parameter in JSON format
+     *
+     * TODO: Make swagger for this controller
+     *
+     * @return array
+     */
     public function actionAdd() {
         $model = new LinkForm();
         if ($model->load(\Yii::$app->getRequest()->getBodyParams(), '') && $model->validate()) {
@@ -38,6 +48,7 @@ class ApiController extends ControllerApi
         }
 
         Yii::error(var_export($model->errors,true));
+        Yii::$app->response->statusCode = 403;
         return ['status' => 'fail', 'code' => 403];
     }
 }

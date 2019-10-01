@@ -8,7 +8,7 @@ use yii\web\Response;
 
 /**
  * Class ApiController
- * Extension for api (authenticated users)
+ * Extension for api
  *
  * @package api\components
  */
@@ -23,9 +23,6 @@ class ControllerApi extends Controller
             [
                 'class' => 'yii\filters\ContentNegotiator',
                 'formats' => ['application/json' => Response::FORMAT_JSON],
-            ],
-            [
-                'class' => HttpBearerAuth::class,
             ],
         ];
     }
