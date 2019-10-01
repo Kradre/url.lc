@@ -2,7 +2,7 @@
 
 namespace tests\unit\models;
 
-use app\models\LoginForm;
+use app\models\forms\LoginForm;
 
 class LoginFormTest extends \Codeception\Test\Unit
 {
@@ -27,7 +27,7 @@ class LoginFormTest extends \Codeception\Test\Unit
     public function testLoginWrongPassword()
     {
         $this->model = new LoginForm([
-            'username' => 'demo',
+            'username' => 'admin',
             'password' => 'wrong_password',
         ]);
 
@@ -39,8 +39,8 @@ class LoginFormTest extends \Codeception\Test\Unit
     public function testLoginCorrect()
     {
         $this->model = new LoginForm([
-            'username' => 'demo',
-            'password' => 'demo',
+            'username' => 'admin',
+            'password' => 'admin',
         ]);
 
         expect_that($this->model->login());

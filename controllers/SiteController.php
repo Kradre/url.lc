@@ -108,13 +108,7 @@ class SiteController extends Controller
             }
         }
 
-        $searchModel = new UrlSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         return $this->render('index', [
-            'model' => $model,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
         ]);
     }
 

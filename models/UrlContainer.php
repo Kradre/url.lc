@@ -34,7 +34,7 @@ class UrlContainer extends \yii\db\ActiveRecord
             [['full_url', 'cookie_key'], 'required'],
             [['created_at'], 'integer'],
             [['short_url'], 'string', 'max' => 7],
-            [['full_url', 'cookie_key'], 'string', 'max' => 255],
+            [['full_url', 'cookie_key'], 'string', 'max' => 500],
             [['short_url'], 'unique'],
         ];
     }

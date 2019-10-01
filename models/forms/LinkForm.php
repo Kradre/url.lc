@@ -48,21 +48,31 @@ class LinkForm extends Model
         $record = new UrlContainer();
         $record->full_url = $this->link;
         $record->cookie_key = $authKey;
-        if ($record->save()) {
-            $record->short_url = substr(hash('sha256', $record->id), 0, 7);
-            if (!$record->save()) {
-                Yii::error(
-                    'Error on save: ' .
-                    var_export([$record->attributes, $record->errors], true)
-                );
+        try {
+            if ($record->save()) {
+                $record->short_url = substr(hash('sha256', $record->id), 0, 7);
+                if (!$record->save()) {
+                    Yii::error(
+                        'Error on save: ' .
+                        var_export([$record->attributes, $record->errors], true)
+                    );
+                    return false;
+                }
+            } else {
+                Yii::error('Error on save: ' . var_export($record->errors, true));
                 return false;
             }
-        } else {
-            Yii::error('Error on save: ' . var_export($record->errors, true));
+
+            return $record;
+        } catch (\Exception $e) {
+            Yii::error('Error on save: ' . var_export([
+                    $e->getMessage(),
+                    $e->getTraceAsString(),
+                    $e->getFile(),
+                    $e->getLine()
+                ], true));
             return false;
         }
-
-        return $record;
     }
 
     protected function refreshLinks()

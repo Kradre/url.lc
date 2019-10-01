@@ -12,7 +12,7 @@ class m191001_073923_update_url_container_table extends Migration
      */
     public function safeUp()
     {
-
+        $this->alterColumn('url_container','full_url',$this->text()->notNull());
     }
 
     /**
@@ -20,9 +20,7 @@ class m191001_073923_update_url_container_table extends Migration
      */
     public function safeDown()
     {
-        echo "m191001_073923_update_url_container_table cannot be reverted.\n";
-
-        return false;
+        $this->alterColumn('url_container','full_url',$this->string()->notNull());
     }
 
     /*
