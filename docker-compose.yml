@@ -14,7 +14,7 @@ services:
       - ./:/app:delegated
     ports:
       - '8000:80'
-#    onrun: "composer install"
+#    command: "php composer install && php yii migrate --interactive=0 && docker-php-entrypoint apache2-foreground"
   db:
       image: mysql:5.7
       networks:
